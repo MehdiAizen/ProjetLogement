@@ -2,6 +2,7 @@ package org.esprim.projetlogement.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -15,4 +16,9 @@ public class Universite {
 
     private String nomUniversite;
     private String adresse;
+
+    // Association OneToMany avec Foyer (Bidirectionnelle)
+    // L'université connaît ses foyers
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universite")
+    private Set<Foyer> foyers;
 }

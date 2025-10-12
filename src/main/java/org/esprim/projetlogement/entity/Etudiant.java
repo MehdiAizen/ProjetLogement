@@ -21,4 +21,9 @@ public class Etudiant {
 
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
+
+    // Association ManyToOne avec Reservation
+    // L'ÉTUDIANT EST LE FILS (contient la clé étrangère)
+    @ManyToOne
+    private Reservation reservation;
 }
