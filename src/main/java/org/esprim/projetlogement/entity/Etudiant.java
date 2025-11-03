@@ -1,14 +1,14 @@
 package org.esprim.projetlogement.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Date;
+import java.util.Set;
 
-@Entity
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Entity
 public class Etudiant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,8 +22,6 @@ public class Etudiant {
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
 
-    // Association ManyToOne avec Reservation
-    // L'ÉTUDIANT EST LE FILS (contient la clé étrangère)
-    @ManyToOne
-    private Reservation reservation;
+    @ManyToMany(mappedBy = "etudiants")
+    private Set<Reservation> reservations;
 }

@@ -1,14 +1,12 @@
 package org.esprim.projetlogement.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.util.Set;
+import lombok.Getter;
+import lombok.Setter;
 
-@Entity
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Entity
 public class Universite {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,8 +15,7 @@ public class Universite {
     private String nomUniversite;
     private String adresse;
 
-    // Association OneToMany avec Foyer (Bidirectionnelle)
-    // L'université connaît ses foyers
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "universite")
-    private Set<Foyer> foyers;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "foyer_id")
+    private Foyer foyer;
 }

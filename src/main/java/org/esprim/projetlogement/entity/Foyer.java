@@ -1,14 +1,13 @@
 package org.esprim.projetlogement.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Set;
 
-@Entity
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Entity
 public class Foyer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,13 +16,9 @@ public class Foyer {
     private String nomFoyer;
     private Long capaciteFoyer;
 
-    // Association ManyToOne avec Universite
-    // LE FOYER EST LE FILS (contient la clé étrangère)
-    @ManyToOne
+    @OneToOne(mappedBy = "foyer")
     private Universite universite;
 
-    // Association OneToMany avec Bloc (Bidirectionnelle)
-    // Le foyer connaît ses blocs
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "foyer")
+    @OneToMany(mappedBy = "foyer", cascade = CascadeType.ALL)
     private Set<Bloc> blocs;
 }

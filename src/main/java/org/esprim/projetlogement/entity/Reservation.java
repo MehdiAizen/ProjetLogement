@@ -1,15 +1,14 @@
 package org.esprim.projetlogement.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Date;
 import java.util.Set;
 
-@Entity
-@Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Entity
 public class Reservation {
     @Id
     private String idReservation;
@@ -17,15 +16,17 @@ public class Reservation {
     @Temporal(TemporalType.DATE)
     private Date anneeUniversitaire;
 
-    private boolean estValide;
+    private Boolean estValide;
 
-    // Association ManyToMany avec Chambre (Bidirectionnelle)
-    // La réservation connaît les chambres réservées
-    @ManyToMany(mappedBy = "reservations", cascade = CascadeType.ALL)
-    private Set<Chambre> chambres;
+    @ManyToOne
+    @JoinColumn(name = "chambre_id")
+    private Chambre chambre;
 
-    // Association OneToMany avec Etudiant (Bidirectionnelle)
-    // La réservation connaît ses étudiants
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservation")
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "reservation_etudiant",
+            joinColumns = @JoinColumn(name = "reservation_id"),
+            inverseJoinColumns = @JoinColumn(name = "etudiant_id")
+    )
     private Set<Etudiant> etudiants;
 }
