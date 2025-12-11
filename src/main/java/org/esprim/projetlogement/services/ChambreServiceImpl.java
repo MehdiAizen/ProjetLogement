@@ -1,6 +1,7 @@
 package org.esprim.projetlogement.services;
 
 import org.esprim.projetlogement.entity.Chambre;
+import org.esprim.projetlogement.entity.TypeChambre;
 import org.esprim.projetlogement.repository.ChambreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,31 @@ public class ChambreServiceImpl implements IChambreService {
             throw new RuntimeException("Cannot update: Chambre not found");
         }
         return chambreRepository.save(chambre);
+    }
+
+    // Méthodes supplémentaires pour les requêtes personnalisées
+    @Override
+    public List<Chambre> findChambresParNomUniversite(String nomUniversite) {
+        return chambreRepository.findChambresParNomUniversite(nomUniversite);
+    }
+
+    @Override
+    public List<Chambre> findChambresParBlocEtTypeJPQL(Long idBloc, TypeChambre type) {
+        return chambreRepository.findChambresParBlocEtTypeJPQL(idBloc, type);
+    }
+
+    @Override
+    public List<Chambre> findByBlocIdBlocAndTypeChambre(Long idBloc, TypeChambre typeChambre) {
+        return chambreRepository.findByBlocIdBlocAndTypeChambre(idBloc, typeChambre);
+    }
+
+    @Override
+    public List<Chambre> findChambresNonReserveesParNomUnivEtType(String nomUniversite, TypeChambre type) {
+        return chambreRepository.findChambresNonReserveesParNomUnivEtType(nomUniversite, type);
+    }
+
+    @Override
+    public List<Chambre> findChambresNonReservees() {
+        return chambreRepository.findChambresNonReservees();
     }
 }

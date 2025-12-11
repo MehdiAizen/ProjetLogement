@@ -1,7 +1,10 @@
 package org.esprim.projetlogement.controllers;
 
 import org.esprim.projetlogement.entity.Bloc;
+import org.esprim.projetlogement.entity.Chambre;
+import org.esprim.projetlogement.entity.TypeChambre;
 import org.esprim.projetlogement.services.IBlocService;
+import org.esprim.projetlogement.services.IChambreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,9 @@ public class BlocRestController {
 
     @Autowired
     private IBlocService blocService;
+
+    @Autowired
+    private IChambreService chambreService;
 
     @Operation(summary = "Récupérer tous les blocs")
     @GetMapping
@@ -45,5 +51,11 @@ public class BlocRestController {
     @PutMapping
     public Bloc modifyBloc(@RequestBody Bloc bloc) {
         return blocService.updateBloc(bloc);
+    }
+
+    @Operation(summary = "Récupérer les chambres par bloc et type")
+    @GetMapping("/{blocId}/chambres/type/{type}")
+    public List<Chambre> getChambresByBlocAndType(@PathVariable Long blocId, @PathVariable TypeChambre type) {
+        return chambreService.findByBlocIdBlocAndTypeChambre(blocId, type);
     }
 }

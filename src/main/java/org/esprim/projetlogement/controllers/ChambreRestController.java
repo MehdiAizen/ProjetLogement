@@ -1,6 +1,7 @@
 package org.esprim.projetlogement.controllers;
 
 import org.esprim.projetlogement.entity.Chambre;
+import org.esprim.projetlogement.entity.TypeChambre;
 import org.esprim.projetlogement.services.IChambreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -45,5 +46,23 @@ public class ChambreRestController {
     @PutMapping
     public Chambre modifyChambre(@RequestBody Chambre chambre) {
         return chambreService.updateChambre(chambre);
+    }
+
+    @Operation(summary = "Récupérer les chambres par université")
+    @GetMapping("/universite/{nomUniversite}")
+    public List<Chambre> getChambresByUniversite(@PathVariable String nomUniversite) {
+        return chambreService.findChambresParNomUniversite(nomUniversite);
+    }
+
+    @Operation(summary = "Récupérer les chambres non réservées par université et type")
+    @GetMapping("/non-reservees/{nomUniversite}/type/{type}")
+    public List<Chambre> getChambresNonReservees(@PathVariable String nomUniversite, @PathVariable TypeChambre type) {
+        return chambreService.findChambresNonReserveesParNomUnivEtType(nomUniversite, type);
+    }
+
+    @Operation(summary = "Récupérer toutes les chambres non réservées")
+    @GetMapping("/non-reservees")
+    public List<Chambre> getAllChambresNonReservees() {
+        return chambreService.findChambresNonReservees();
     }
 }
